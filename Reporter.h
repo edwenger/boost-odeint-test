@@ -4,16 +4,23 @@
 
 #include "Common.h"
 
+struct ReporterState
+{
+    std::vector<state_type> m_states;
+    std::vector<double> m_times;
+
+    void Append(const state_type &x, double t);
+
+    void Write(size_t steps);
+};
+
 class Reporter
 {
 public:
-    Reporter(std::vector<state_type> &states, std::vector<double> &times);
+    Reporter(ReporterState& reporter_state);
 
     void operator()(const state_type &x, double t);
 
-    void Write(size_t steps);
-
 private:
-    std::vector<state_type>& m_states;
-    std::vector<double>& m_times;
+    ReporterState& m_reporter_state;
 };
