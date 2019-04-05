@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Common.h"
+#include "model/Types.h"
 
 struct ReporterState
 {

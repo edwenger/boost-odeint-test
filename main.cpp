@@ -2,8 +2,8 @@
 
 #include <boost/numeric/odeint.hpp>
 
-#include "Lorenz.h"
-#include "Reporter.h"
+#include "model/Lorenz.h"
+#include "report/Reporter.h"
 
 using namespace boost::numeric::odeint;
 

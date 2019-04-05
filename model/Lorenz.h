@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common.h"
+#include "Types.h"
 
 class Lorenz {
 
