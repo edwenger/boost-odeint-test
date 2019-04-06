@@ -1,1 +1,1 @@
-add_library(model STATIC Lorenz.cpp)
+add_library(model STATIC Antibody.cpp)
