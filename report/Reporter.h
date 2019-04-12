@@ -11,7 +11,7 @@ struct ReporterState
 
     void Append(const state_type &x, double t);
 
-    void Write(size_t steps);
+    void Write();
 };
 
 class Reporter

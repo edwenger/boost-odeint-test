@@ -9,11 +9,11 @@ void ReporterState::Append(const state_type &x, double t)
     m_times.push_back(t);
 }
 
-void ReporterState::Write(size_t steps)
+void ReporterState::Write()
 {
     std::ofstream outfile;
     outfile.open("test/output.csv");
-    for( size_t i=0; i<=steps; i++ )
+    for( size_t i=0; i<m_times.size(); i++ )
     {
         std::cout << m_times[i] << '\t';
         outfile << m_times[i] << ',';

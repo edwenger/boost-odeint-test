@@ -38,7 +38,7 @@ void Antibody::operator() (const state_type &x, state_type &dxdt, double t)
     double antibody = x[State::ANTIBODY];
 
     /*** Antigen concentration ***/
-    // TODO: merozoites_per_schizont as a discrete event every 48h?
+    // NB: merozoites_per_schizont as a discrete event every 48h
 
     dxdt[State::ANTIGEN] = -kill_rate * antibody * antigen;
 
