@@ -18,13 +18,19 @@ int main(int argc, char **argv)
 
     Antibody *antibody = new Antibody();  // ODE model and params
 
-    for (int days=0; days<=60; days+=2) // 48h cycles
+    for (int days=0; days<210; days+=2) // 48h cycles
     {
+        if (days == 180)
+            x[0] = 1e-3;  // homologous reinfection
+
+        if (x[0] < 2e-7)
+            x[0] = 0;  // crudely discretize at 1 infected cell in 5 liters
+
         x[0] *= merozoites_per_schizont;
 
         size_t steps = integrate(
             *antibody, x,
-            (double)days, (double)(days + 2), 1.0/24,
+            (double)days, (double)(days + 2), 2.0/24,
             reporter);
     }
     reporter_state.Write();

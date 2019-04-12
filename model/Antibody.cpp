@@ -47,17 +47,20 @@ void Antibody::operator() (const state_type &x, state_type &dxdt, double t)
     double capacity_decay = hyperimmune_decay_rate * (capacity - memory_level);
 
     double capacity_increase = 0;
-    if (capacity <= B_CELL_PROLIFERATION_THRESHOLD)
+    if (antigen > 0)
     {
-        double stimulation = threshold_function(
-            stimulation_c50,
-            antigen + min_adapted_response*stimulation_c50);
+        if (capacity <= B_CELL_PROLIFERATION_THRESHOLD)
+        {
+            double stimulation = threshold_function(
+                stimulation_c50,
+                antigen + min_adapted_response*stimulation_c50);
 
-        capacity_increase = capacity_growth_rate * (1-capacity) * stimulation;
-    }
-    else
-    {
-        capacity_increase = (1-capacity) * B_CELL_PROLIFERATION_CONSTANT;
+            capacity_increase = capacity_growth_rate * (1-capacity) * stimulation;
+        }
+        else
+        {
+            capacity_increase = (1-capacity) * B_CELL_PROLIFERATION_CONSTANT;
+        }
     }
 
     dxdt[State::CAPACITY] = capacity_increase - capacity_decay;
@@ -67,9 +70,11 @@ void Antibody::operator() (const state_type &x, state_type &dxdt, double t)
     double antibody_decay = TWENTY_DAY_DECAY_CONSTANT * antibody;
 
     double antibody_increase = 0;
-    if (capacity > ANTIBODY_RELEASE_THRESHOLD)
-        antibody_increase = (capacity - antibody) * ANTIBODY_RELEASE_FACTOR;
-
+    if (antigen > 0)
+    {
+        if (capacity > ANTIBODY_RELEASE_THRESHOLD)
+            antibody_increase = (capacity - antibody) * ANTIBODY_RELEASE_FACTOR;
+    }
     dxdt[State::ANTIBODY] = antibody_increase - antibody_decay;
 
 }
